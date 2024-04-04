@@ -1,5 +1,6 @@
 
 
+
 <html>
 <body>      
    
@@ -23,12 +24,18 @@
 <script>
 
 var counter=0;
-var totalQuestions=2;
+var totalQuestions=4;
 
+var myGraduationYear= 2027;
+var myMajor="history";
+
+//create a list of the majors you are/ were interested in
+var majorInterestedList=["Soziologie", "Psychologie", "Datenwissenschaft", "Neurowissenschaften" ];
 
 var userName;
 
     function displayFeedback(form) {
+
         counter++;
 
         var feedbackText="";
@@ -39,16 +46,47 @@ var userName;
         if (counter==1) {        
             userName= userInput;
             feedbackText="Hallo, "+ userName+" ! " +"<br>Schön, dich kennenzulernen."+
-            "Ich bin Nina, ein Internet-Bot.";
+            " Ich bin Nina, ein Internet-Bot.";
 
             newQuestionText="Bist du auch ein Internet-Bbot??";              
         }
 
         if (counter==2) {        
-            feedbackText="Danke, dass du ehrlich bist."; 
-            newQuestionText="";              
+            feedbackText="Danke, dass du ehrlich bist.  Ich verstehe jetzt, dass Sie Student sind"; 
+            newQuestionText="Was ist dein Hauptfach?";              
         }
 
+        if (counter==3) {     
+            if (userInput.toLowerCase()== myMajor) feedbackText="Großartig! Ich weiß schon alles. Entschuldigung!"+ userInput+"."; 
+            
+            else {
+                feedbackText="Ich schätze, du denkst, du bist so schlau.  Indeed, " +userInput+ " ist sehr interessant.  aber ich bin interessanter"+" ich bin ein internet-bot "
+                
+                //check if user's major is one the majors in your majorInterestedList 
+                for (let i = 0; i < majorInterestedList.length; i++) {      
+                    if (userInput.toLowerCase() == majorInterestedList[i]) {
+                        feedbackText=userInput+ "war einer meiner Favoriten."+
+                        " Ich studiere jetzt"+myMajor+".";
+                    }    
+                }
+        }
+
+        newQuestionText="Wann machst du deinen Abschluss?"; 
+        }
+
+        if (counter==4) {     
+            if (userInput== myGraduationYear) feedbackText="Ich werde nie meinen Abschluss machen, aber gut für dich! ";  
+            else if (userInput< myGraduationYear) feedbackText="Du bist ein guter Nicht-Internet-Bot"; 
+            else if (userInput> myGraduationYear) feedbackText="Schon."+ myGraduationYear+"Bitte geh jetzt.";
+            else feedbackText="Danke, dass du mit mir redest.";  
+        }
+        
+        //if you have reached the last question
+        if (counter>=totalQuestions ) {
+            feedbackText=feedbackText+"<br><br>es war schön, mit Ihnen zu sprechen, "+userName+"."+
+            "<br>hab ein gutes Leben!";           
+        }
+      
         //update the feedback and clear the input box
         document.getElementById("botSays").innerHTML = feedbackText+ "<br><br>"+newQuestionText;   
         form.userInput.value=""; 
